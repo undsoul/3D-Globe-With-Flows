@@ -1,0 +1,12 @@
+{
+    "name": "Globe Visualization With Flows",
+    "description": "Interactive 3D globe visualization with flows",
+    "type": "visualization",
+    "version": "22.0.0",
+    "author": "MuchachoAI",
+    "icon": "map",
+    "preview": "",
+    "dependencies": {
+        "qlik-sense": ">=3.0.x"
+    }
+}

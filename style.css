@@ -1,0 +1,136 @@
+#globe-tooltip {
+    position: fixed !important;
+    background-color: rgba(255, 255, 255, 0.933) !important;
+    border: 1px solid #ccc !important;
+    padding: 10px !important;
+    z-index: 999999 !important;
+    pointer-events: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.qv-extension-qlik-globe {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#globe-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+}
+
+#globe-container:active {
+    cursor: grabbing;
+}
+
+.ocean {
+    fill: #e6f3ff;
+}
+
+.country {
+    transition: fill 0.2s;
+}
+
+.country:hover {
+    fill: #b8c2c6;
+}
+
+.flow-line {
+    pointer-events: all !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease;
+}
+
+.flow-line:hover {
+    stroke: red !important;
+    stroke-width: 3px !important;
+}
+
+.location {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    fill-opacity: 0.7;
+}
+
+.location:hover {
+    fill-opacity: 1;
+    cursor: pointer;
+}
+
+.location.origin {
+    stroke: white;
+    stroke-width: 1px;
+}
+
+.reset-view-button {
+    padding: 8px 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.reset-view-button:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.location {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.location.highlighted {
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.3));
+}
+
+.flow-line {
+    transition: all 0.3s ease;
+}
+
+.flow-line.highlighted {
+    filter: drop-shadow(0 0 3px rgba(0,0,0,0.2));
+}
+
+.lui-buttongroup {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.lui-button--toolbar-inverse {
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0 2px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.lui-button--toolbar-inverse:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.lui-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.lui-icon--close::before {
+    content: "✕";
+}
+
+.lui-icon--tick::before {
+    content: "✓";
+}
