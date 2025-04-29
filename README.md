@@ -1,90 +1,192 @@
 # Qlik Globe Flows Extension
 
-Qlik Globe Flows is an interactive Qlik Sense extension that brings your geographic data to life with an animated 3D globe visualization. Built with D3.js and integrated with Qlik’s APIs, this extension displays dynamic flows between geographic locations through smooth animations, interactive selections, and customizable visual properties.
+An interactive 3D globe visualization extension for Qlik Sense that displays geographical flow data between origin and destination points.
 
-![Globe Overview](images/screenshot1.png)
+![Globe Flows Screenshot](screenshot.png)
+
+## Overview
+
+The Qlik Globe Flows extension visualizes connections between geographical locations on an interactive 3D globe. It's designed to show relationships, transactions, or movements between different points on Earth with customizable visual properties.
 
 ## Features
 
-- **Animated Globe Visualization**  
-  - Renders a realistic 3D globe using an orthographic projection.  
-  - Smooth initial animation from a starting position to a natural view.  
-  - Supports panning and zooming with touch-friendly controls.
+- **Interactive 3D Globe**: Rotatable and zoomable globe with smooth animations
+- **Flow Visualization**: Show connections between origin and destination points with customizable line width based on measures
+- **Point Visualization**: Highlight origin and destination points with configurable styling
+- **Size by Measure**: Option to size destination points based on measure values
+- **Interactive Selection**: Select countries and points to highlight specific flows
+- **Customizable Styling**: Extensive options for colors, sizes, opacities, and more
+- **Responsive Design**: Adapts to different screen sizes and container dimensions
+- **Performance Optimized**: Handles large datasets with point limits and visibility optimizations
+- **Rich Tooltips**: Detailed information on hover with customizable appearance
 
-- **Dynamic Flow Lines**  
-  - Curved great circle arcs connect origin and destination points.  
-  - Flow measure controls the thickness of the lines, emphasizing stronger connections.  
-  - Only draws visible portions of flows to maintain clarity.  [oai_citation:0‡qlik-globe-flows.js](file-service://file-19vVHXUSDjDN2hgFowmMZP)
+## Installation
 
-- **Interactive Data Points and Country Selection**  
-  - Plots both origin and destination points with interactive hover and click events.  
-  - Hovering displays tooltips with detailed information.  
-  - Clicking on a point triggers a selection and highlights the corresponding country and flows.
+1. Download the latest release ZIP file from the [releases page](https://github.com/yourusername/qlik-globe-flows/releases)
+2. In Qlik Sense QMC, go to **Extensions** and click **Import**
+3. Select the downloaded ZIP file
+4. The extension will be available in the Qlik Sense visualization library
 
-- **Zoom and Pan Controls**  
-  - Includes zoom in, zoom out, and reset view buttons.  
-  - Designed for both desktop and touch devices for a responsive experience.
-
-- **Efficient Data Handling**  
-  - Loads data in chunks from Qlik’s backend API.  
-  - Displays a progress indicator during data loading.  
-  - Optionally warns users when the displayed data exceeds a set limit.
-
-![Flow Lines and Points](images/screenshot2.png)
-
-## Dimensions and Measures
+## Usage
 
 ### Required Dimensions (6)
-1. **Origin Latitude**  
-   Numeric value specifying the latitude of the origin point.
-2. **Origin Longitude**  
-   Numeric value specifying the longitude of the origin point.
-3. **Origin Name**  
-   Text field for the origin location’s name (used for country identification).
-4. **Destination Latitude**  
-   Numeric value specifying the latitude of the destination point.
-5. **Destination Longitude**  
-   Numeric value specifying the longitude of the destination point.
-6. **Destination Name**  
-   Text field for the destination location’s name.
 
-### Optional Measures (0 to 2)
-1. **Flow Measure**  
-   Controls the width of the flow lines. A larger value increases the line thickness, indicating a stronger flow.
-2. **Destination Sizing Measure (Optional)**  
-   When enabled, scales destination point sizes based on aggregated values, emphasizing destinations with higher significance.
+1. **Origin Latitude**: Latitude coordinates of the origin point
+2. **Origin Longitude**: Longitude coordinates of the origin point
+3. **Origin Name**: Name or identifier of the origin location
+4. **Destination Latitude**: Latitude coordinates of the destination point
+5. **Destination Longitude**: Longitude coordinates of the destination point
+6. **Destination Name**: Name or identifier of the destination location
 
-## Property Panel Overview
+### Optional Measures (0-2)
 
-The property panel is organized into accordion sections that let you customize every aspect of the visualization:
+1. **Flow Value**: Controls the width of flow lines (optional)
+2. **Destination Value**: Controls the size of destination points when "Size Destination Points by Measure" is enabled (optional)
 
-- **Globe Settings**
-  - Customize country colors for default, hover, and selection states.
-  - Adjust the ocean’s color to match your visual style.
+### Configuration Options
 
-- **Point Settings**
-  - Configure size and appearance of origin and destination points.
-  - Set border color, width, and opacity for both point types.
-  - Define a maximum number of points to display, with an optional warning message if exceeded.
+The extension provides comprehensive configuration options organized into different sections:
 
-- **Flow Settings**
-  - Adjust flow line appearance with customizable base color, opacity, and width scaling factor.
-  - The flow measure directly influences the thickness of these lines.
+#### Globe Settings
 
-- **Zoom Settings**
-  - Set initial zoom level and define minimum and maximum zoom scales.
-  - Adjust the zoom speed factor to control the interactivity.
+- **Country Color**: Base color for countries
+- **Country Hover Color**: Color when hovering over countries
+- **Country Selection Color**: Color for selected countries
+- **Enable Country Selection**: Toggle country selection functionality
+- **Ocean Color**: Color for the ocean/background
 
-- **Tooltip Settings**
-  - Fully style tooltips with options for background color, text color, padding, font size, and border settings.
-  - Separate styling options for dimension text and measure values ensure clarity.
+#### Point Settings
 
-## Source Code
+- **Point Show Limit**: Maximum number of points to display for performance
+- **Show Warning When Limited**: Display a warning when data is limited
+- **Point Color**: Color for origin/destination points
+- **Point Color Opacity**: Transparency of points
+- **Origin Point Size**: Size of origin points
+- **Point Border Settings**: Customize borders for origin and destination points
+- **Size Destination Points by Measure**: Enable sizing destinations by measure values
+- **Min/Max Destination Point Size**: Size range for destination points
 
-For detailed implementation, please see the source files:
-- [qlik-globe-flows.js](#) 
-- [style.css](#)  
+#### Flow Settings
+
+- **Flow Line Color**: Color for flow lines
+- **Flow Line Opacity**: Transparency of flow lines
+- **Base Line Width**: Minimum width for flow lines
+- **Line Width Scale Factor**: Multiplier for line width based on measure
+
+#### Zoom Settings
+
+- **Minimum Zoom Scale**: Lower zoom limit
+- **Maximum Zoom Scale**: Upper zoom limit
+- **Initial Zoom Level**: Default zoom on load
+- **Zoom Speed Factor**: Speed of zoom controls
+
+#### Tooltip Settings
+
+- **Appearance**: Background color and opacity
+- **Base Text Style**: Color, size, and weight for dimension text
+- **Measure Value Style**: Color, size, and weight for measure values
+- **Spacing**: Padding settings
+- **Border**: Border color, width, and radius
+- **Shadow**: Shadow blur, spread, and opacity
+
+## Data Format Example
+
+Your data should contain the following fields:
+
+| Origin Lat | Origin Long | Origin Name | Dest Lat | Dest Long | Dest Name | Flow Value | Dest Value |
+|------------|-------------|------------|----------|-----------|-----------|------------|------------|
+| 40.7128    | -74.0060    | New York   | 34.0522  | -118.2437 | Los Angeles | 1250      | 780        |
+| 51.5074    | -0.1278     | London     | 48.8566  | 2.3522    | Paris     | 980        | 540        |
+| ...        | ...         | ...        | ...      | ...       | ...       | ...        | ...        |
+
+## Interaction
+
+- **Drag**: Rotate the globe
+- **Scroll/Pinch**: Zoom in/out
+- **Click Country**: Select a country
+- **Click Point**: Select an origin or destination point
+- **Hover**: Display tooltip information
+- **Zoom Controls**: Use the +/- buttons for precise zoom
+
+## Performance Tips
+
+- Set an appropriate **Point Show Limit** for your data size
+- Enable **Show Warning When Limited** to be aware of data limitations
+- For very large datasets, consider pre-filtering data before visualization
+- Use Qlik Sense's filtering to focus on specific regions or time periods
+
+## Browser Compatibility
+
+This extension works on all modern browsers that support WebGL:
+- Chrome
+- Firefox
+- Safari
+- Edge
+
+Mobile browsers are supported with touch interaction for rotation and zooming.
+
+## Development
+
+### Prerequisites
+
+- Node.js and npm
+- Qlik Sense Desktop or Server for testing
+
+### Setup
+
+1. Clone the repository:
+```
+git clone https://github.com/yourusername/qlik-globe-flows.git
+```
+
+2. Install dependencies:
+```
+npm install
+```
+
+3. Build the extension:
+```
+npm run build
+```
+
+4. Copy to Qlik Sense extension directory:
+```
+cp -r dist /path/to/qlik/extensions/
+```
+
+### Project Structure
+
+- `qlik-globe-flows.js`: Main extension code
+- `globeCoordinates.json`: World map data
+- `d3.v7.js`: D3.js dependency
+- `properties.js`: Extension property definitions
+
+## License
+
+[MIT License](LICENSE)
+
+## Credits
+
+- Built with [D3.js](https://d3js.org/)
+- Uses [TopoJSON](https://github.com/topojson/topojson) for geographical data
+
+## Support
+
+For issues, feature requests, or contributions, please use the [GitHub Issues](https://github.com/yourusername/qlik-globe-flows/issues) page.
 
 ---
 
-Feel free to fork, modify, and contribute to enhance this extension’s capabilities for your Qlik Sense applications!
+## Changelog
+
+### v1.0.0
+- Initial release
+
+### v1.1.0
+- Added destination point sizing
+- Improved performance for large datasets
+- Enhanced tooltip customization
+
+### v1.2.0
+- Added country selection feature
+- Improved flow line animations
+- Fixed visibility issues with rotated globe
