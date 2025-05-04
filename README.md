@@ -176,17 +176,3 @@ For issues, feature requests, or contributions, please use the [GitHub Issues](h
 
 ---
 
-## Changelog
-
-### v1.0.0
-- Initial release
-
-### v1.1.0
-- Added destination point sizing
-- Improved performance for large datasets
-- Enhanced tooltip customization
-
-### v1.2.0
-- Added country selection feature
-- Improved flow line animations
-- Fixed visibility issues with rotated globe
