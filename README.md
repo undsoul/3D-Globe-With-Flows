@@ -2,7 +2,11 @@
 
 An interactive 3D globe visualization extension for Qlik Sense that displays geographical flow data between origin and destination points.
 
-![Globe Flows Screenshot](screenshot.png)
+
+
+https://github.com/user-attachments/assets/da0183ec-b517-4d87-9c52-78a79f7f6292
+
+
 
 ## Overview
 
