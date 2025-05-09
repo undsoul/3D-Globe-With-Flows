@@ -335,24 +335,24 @@ define(['qlik', 'jquery', 'text!./globeCoordinates.json','./d3.v7'], function(ql
                     index: -1
                 },
                 pointColor: {
-                    color: "#000075",
+                    color: "#008936",
                     index: -1
                 },
                 pointBorderColor: {
-                    color: "#ffffff",
+                    color: "#19426C",
                     index: -1
                 },
                 pointBorderWidth: 1,
                 pointBorderOpacity: 0.8,
                 // For destination points
                 destPointBorderColor: {
-                    color: "#ffffff",
+                    color: "#19426C",
                     index: -1
                 },
                 destPointBorderWidth: 1,
                 destPointBorderOpacity: 0.8, 
                 flowLineColor: {
-                    color: "#000075",
+                    color: "#008936",
                     index: -1
                 },
                 // Corrected tooltip properties
@@ -361,7 +361,7 @@ define(['qlik', 'jquery', 'text!./globeCoordinates.json','./d3.v7'], function(ql
                     index: -1
                 },
                 tooltipTextColor: {
-                    color: "#333333",
+                    color: "#19426C",
                     index: -1
                 },
                 tooltipBorderColor: {

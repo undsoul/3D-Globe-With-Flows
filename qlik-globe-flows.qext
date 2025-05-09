@@ -2,7 +2,7 @@
     "name": "Globe Viz w/Flows",
     "description": "Interactive 3D globe visualization with flows",
     "type": "visualization",
-    "version": "22.0.0",
+    "version": "1.0.0",
     "author": "MuchachoAI",
     "icon": "map",
     "preview": "",
