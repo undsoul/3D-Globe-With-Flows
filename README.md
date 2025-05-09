@@ -4,10 +4,6 @@ An interactive 3D globe visualization extension for Qlik Sense that displays geo
 
 
 
-https://github.com/user-attachments/assets/da0183ec-b517-4d87-9c52-78a79f7f6292
-
-
-
 ## Overview
 
 The Qlik Globe Flows extension visualizes connections between geographical locations on an interactive 3D globe. It's designed to show relationships, transactions, or movements between different points on Earth with customizable visual properties.
