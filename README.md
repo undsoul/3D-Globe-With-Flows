@@ -22,10 +22,23 @@ The Qlik Globe Flows extension visualizes connections between geographical locat
 
 ## Installation
 
-1. Download the latest release ZIP file 
-2. In Qlik Sense QMC, go to **Extensions** and click **Import**
-3. Select the downloaded ZIP file
-4. The extension will be available in the Qlik Sense visualization library
+### Qlik Sense Desktop / On-Premises
+
+1. Download the latest release ZIP file from the [releases page](https://github.com/yourusername/qlik-globe/releases)
+2. Extract the ZIP file
+3. Copy the extracted folder to your Qlik Sense extensions directory:
+   - Qlik Sense Desktop: `C:\Users\[USERNAME]\Documents\Qlik\Sense\Extensions\`
+   - Qlik Sense Server: Import through the QMC (Qlik Management Console)
+
+### Qlik Sense Cloud
+
+1. Download the latest release ZIP file from the [releases page](https://github.com/yourusername/qlik-globe/releases)
+2. Log in to your Qlik Sense Cloud tenant
+3. Navigate to the hub and open the app where you want to use the extension
+4. Click on "Add new" in the left panel
+5. Select "Extension" and then "Upload extension"
+6. Choose the downloaded ZIP file and upload
+7. The extension will now be available in your app
 
 ## Usage
 
