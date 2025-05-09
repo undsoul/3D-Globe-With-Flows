@@ -2239,35 +2239,53 @@ define(['qlik', 'jquery', 'text!./globeCoordinates.json','./d3.v7'], function(ql
 
                         
                         // Replace the zoom and drag implementation with this combined version
-                        function setupInteractions() {
+                        function setupInteractions(svg, projection, layers, path, minScale, maxScale, layout) {
                             let isDragging = false;
                             let isAnimating = false;
+                            let zoomScaleBase = projection.scale(); // Track base scale for zoom
                             
-                            // Zoom behavior'u güncelle
-                            const zoom = d3.zoom()
-                                .scaleExtent([layout.props.minZoomScale || 0.5, layout.props.maxZoomScale || 2.5])
-                                .on("zoom", (event) => {
-                                    if (isAnimating) return; // Animasyon sırasında zoom'u engelle
-                                    
-                                    const scale = projection.scale() * event.transform.k / lastK;
-                                    const constrainedScale = Math.max(minScale, Math.min(maxScale, scale));
-                                    
-                                    projection.scale(constrainedScale);
-                                    layers.ocean.select("circle").attr("r", constrainedScale);
-                                    layers.countries.selectAll("path").attr("d", path);
-                                    updateFlows();
-                                    updateZoomIndicator(constrainedScale);
-                                    
-                                    lastK = event.transform.k;
-                                });
-                        
-                            // Drag behavior'u güncelle
+                            // Define a better wheel handler
+                            function handleWheel(event) {
+                                if (isAnimating) return;
+                                event.preventDefault(); // Prevent page scrolling
+                                
+                                const zoomSpeed = layout.props.zoomSpeed || 1.2;
+                                const delta = event.deltaY < 0 ? zoomSpeed : 1/zoomSpeed;
+                                
+                                const currentScale = projection.scale();
+                                let newScale = currentScale * delta;
+                                
+                                // Enforce zoom limits
+                                newScale = Math.max(minScale, Math.min(maxScale, newScale));
+                                
+                                // Get mouse position for zoom targeting
+                                const mousePos = d3.pointer(event);
+                                const targetPoint = projection.invert(mousePos);
+                                
+                                // Apply new scale
+                                projection.scale(newScale);
+                                
+                                // Update visual elements
+                                layers.ocean.select("circle").attr("r", newScale);
+                                layers.countries.selectAll("path").attr("d", path);
+                                updateFlows();
+                                updateZoomIndicator(newScale);
+                                
+                                // Clear path cache on significant zoom changes
+                                if (Math.abs(newScale - currentScale) > 20) {
+                                    clearPathCache();
+                                }
+                            }
+                            
+                            // Drag behavior
                             const drag = d3.drag()
                                 .on("start", () => {
                                     isDragging = true;
+                                    // Disable zoom during drag to prevent conflicts
+                                    svg.on("wheel.zoom", null);
                                 })
                                 .on("drag", (event) => {
-                                    if (isAnimating) return; // Animasyon sırasında drag'i engelle
+                                    if (isAnimating) return;
                                     
                                     const rotate = projection.rotate();
                                     const k = 75 / projection.scale();
@@ -2283,26 +2301,60 @@ define(['qlik', 'jquery', 'text!./globeCoordinates.json','./d3.v7'], function(ql
                                 })
                                 .on("end", () => {
                                     isDragging = false;
+                                    // Re-enable wheel zoom after drag ends
+                                    svg.on("wheel.zoom", handleWheel);
                                 });
-                        
-                            // Event handlers'ı güncelle
-                            svg.call(zoom)
-                               .call(drag)
-                               .on("mousedown.zoom", null)
-                               .on("touchstart.zoom", null)
-                               .on("touchmove.zoom", null)
-                               .on("touchend.zoom", null);
-                        
-                            // Animasyon başlamadan önce kontrol ekleyin
+                            
+                            // Apply the behaviors
+                            svg.call(drag);
+                            
+                            // Explicitly handle wheel zooming
+                            svg.on("wheel.zoom", handleWheel);
+                            
+                            // To handle touch zoom, we need separate touch handlers
+                            let touchScale = 1;
+                            let touchDistance = 0;
+                            
+                            svg.on("touchstart", (event) => {
+                                if (event.touches.length === 2) {
+                                    const dx = event.touches[0].pageX - event.touches[1].pageX;
+                                    const dy = event.touches[0].pageY - event.touches[1].pageY;
+                                    touchDistance = Math.sqrt(dx * dx + dy * dy);
+                                    touchScale = projection.scale();
+                                }
+                            });
+                            
+                            svg.on("touchmove", (event) => {
+                                if (isAnimating) return;
+                                
+                                if (event.touches.length === 2) {
+                                    event.preventDefault();
+                                    
+                                    const dx = event.touches[0].pageX - event.touches[1].pageX;
+                                    const dy = event.touches[0].pageY - event.touches[1].pageY;
+                                    const newDistance = Math.sqrt(dx * dx + dy * dy);
+                                    
+                                    // Calculate new scale based on change in touch distance
+                                    let newScale = touchScale * (newDistance / touchDistance);
+                                    newScale = Math.max(minScale, Math.min(maxScale, newScale));
+                                    
+                                    projection.scale(newScale);
+                                    layers.ocean.select("circle").attr("r", newScale);
+                                    layers.countries.selectAll("path").attr("d", path);
+                                    updateFlows();
+                                    updateZoomIndicator(newScale);
+                                }
+                            });
+                            
                             function startAnimation() {
                                 isAnimating = true;
                                 return new Promise(resolve => {
                                     setTimeout(() => {
                                         isAnimating = false;
                                         resolve();
-                                    }, 1100); // animasyon süresi + biraz fazlası
+                                    }, 1100); // Animation duration plus a little extra
                                 });
-                            } 
+                            }
                         }
 
   
