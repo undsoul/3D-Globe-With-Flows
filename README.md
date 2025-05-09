@@ -22,7 +22,7 @@ The Qlik Globe Flows extension visualizes connections between geographical locat
 
 ## Installation
 
-1. Download the latest release ZIP file from the [releases page](https://github.com/yourusername/qlik-globe-flows/releases)
+1. Download the latest release ZIP file 
 2. In Qlik Sense QMC, go to **Extensions** and click **Import**
 3. Select the downloaded ZIP file
 4. The extension will be available in the Qlik Sense visualization library
@@ -136,7 +136,7 @@ Mobile browsers are supported with touch interaction for rotation and zooming.
 
 1. Clone the repository:
 ```
-git clone https://github.com/yourusername/qlik-globe-flows.git
+git clone https://github.com/undsoul/qlik-globe-flows.git
 ```
 
 2. Install dependencies:
@@ -172,7 +172,7 @@ cp -r dist /path/to/qlik/extensions/
 
 ## Support
 
-For issues, feature requests, or contributions, please use the [GitHub Issues](https://github.com/yourusername/qlik-globe-flows/issues) page.
+For issues, feature requests, or contributions, please use the [GitHub Issues](https://github.com/undsoul/qlik-globe-flows/issues) page.
 
 ---
 
